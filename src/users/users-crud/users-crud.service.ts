@@ -8,9 +8,14 @@ import { PerfilesDocument, Perfiles } from '../../common/schema/perfil.schema';
 import { from } from 'rxjs';
 import { Usuarios, UsuariosDocument } from '../../common/schema/usuario.schema';
 import { Tareas, TareasDocument } from '../../common/schema/tareas.schema';
+import * as bcrypt from 'bcrypt';
+import { DataException } from '../../common/exception/data.exception';
 @Injectable()
 export class UsersCrudService {
     private readonly users: User[];
+
+
+     
 
     // private observersss:Observer<any> = {
     //     next: value  => console.log('siguiente [next]:', value),
@@ -49,6 +54,76 @@ export class UsersCrudService {
         return this.obs$;
     }
 
+    async insertUser(user:Usuarios): Promise<Usuarios>{
+        
+       
+        //return await new this.usuarioModel(user).save();
+        
+        return await this.usuarioModel.findOneAndUpdate({ _id: user._id }, user, {
+            new: true,
+            upsert: true,
+            runValidators: true,
+            useFindAndModify:false
+          });
+
+
+      
+    }
+
+
+    async findAllUsuarios(): Promise<Usuarios[]>{
+        // const existeEmail =  await this.perfilModel.findOne({idPerfil:'ED'});
+        //const existeEmail =  await this.perfilModel.find().exec();
+         ///console.log('perfil', existeEmail);
+         return this.usuarioModel.find().exec();;
+     }
+
+
+    async findUsuario(user:Usuarios): Promise<Usuarios>{
+        // const existeEmail =  await this.perfilModel.findOne({idPerfil:'ED'});
+        //const existeEmail =  await this.perfilModel.find().exec();
+         ///console.log('perfil', existeEmail);
+       
+            
+            const usuarioConsulta:Usuarios =  await this.usuarioModel.findOne({$or: [ { "idUsuario": user.idUsuario}, {"email":user.email} ] }).exec()
+                                            .catch(err =>{
+                                              throw new DataException('No se encuentra el usuario')
+                                            });  
+  
+            if(usuarioConsulta){
+                return usuarioConsulta;
+            }else{
+              throw new DataException('No se encuentra el usuario')
+            }
+      
+     }
+
+
+     async deleteUserLogic(user:Usuarios): Promise<Usuarios>{
+        // const existeEmail =  await this.perfilModel.findOne({idPerfil:'ED'});
+        //const existeEmail =  await this.perfilModel.find().exec();
+         ///console.log('perfil', existeEmail);
+        
+         user.activo = false;
+            
+         return await  this.usuarioModel.findOneAndUpdate({ idUsuario: user.idUsuario }, user, {
+            new: true,
+            upsert: true,
+            runValidators: true,
+            useFindAndModify:false
+           
+          });
+                                            
+  
+            
+      
+     }
+
+
+
+
+
+
      async findPerfiles(): Promise<Perfiles[]>{
        // const existeEmail =  await this.perfilModel.findOne({idPerfil:'ED'});
        //const existeEmail =  await this.perfilModel.find().exec();
@@ -56,18 +131,43 @@ export class UsersCrudService {
         return this.perfilModel.find().exec();;
     }
 
-    async findUsuario(): Promise<Usuarios[]>{
-        // const existeEmail =  await this.perfilModel.findOne({idPerfil:'ED'});
-        //const existeEmail =  await this.perfilModel.find().exec();
-         ///console.log('perfil', existeEmail);
-         return this.usuarioModel.find().exec();;
-     }
+    
 
      async findTareas(): Promise<Tareas[]>{
         // const existeEmail =  await this.perfilModel.findOne({idPerfil:'ED'});
         //const existeEmail =  await this.perfilModel.find().exec();
          ///console.log('perfil', existeEmail);
          return this.tareasModel.find().exec();;
+     }
+
+     async findComplete(): Promise<Tareas[]>{
+        // const existeEmail =  await this.perfilModel.findOne({idPerfil:'ED'});
+        //const existeEmail =  await this.perfilModel.find().exec();
+         ///console.log('perfil', existeEmail);
+         return this.tareasModel.aggregate([
+             {
+                 $match: {activo:true}
+             },
+             {
+                $lookup: 
+                {
+                    from: 'perfiles',
+                    localField: 'idPerfil',
+                    foreignField: 'idPerfil',
+                    as: 'perfilRel'
+                },
+                
+             },
+             {
+                $lookup: 
+                {
+                    from: 'usuarios',
+                    localField: 'idUsuario',
+                    foreignField: 'idUsuario',
+                    as: 'userRel'
+                }
+             }    
+         ]).sort({"fechaCaducidad":1})
      }
 
 }

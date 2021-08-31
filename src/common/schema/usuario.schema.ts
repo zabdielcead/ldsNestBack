@@ -2,10 +2,12 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
 import { Perfiles } from './perfil.schema';
+import { Type, Transform } from 'class-transformer';
 
-export type UsuariosDocument = Usuarios & Document;
 
-@Schema()
+export type UsuariosDocument = Usuarios & Document ;
+
+@Schema({ versionKey: false })
 export class Usuarios {
 //   @Prop({
 //       index:'text',
@@ -16,7 +18,11 @@ export class Usuarios {
 //       ],
 //       unique:true
 //   })
-//   _id: string;
+// @Transform(({ value }) => value.toString())
+  @Prop()    
+  _id: string;
+
+    
 
 
 
@@ -77,13 +83,14 @@ export class Usuarios {
 
 
     @Prop({
-        type: mongoose.Schema.Types.ObjectId, ref: 'Perfiles',
+       // type: mongoose.Schema.Types.ObjectId, ref: 'Perfiles',
+        type: String,
         required:[
             true,
             'el idPerfil es obligatorio'
         ]
     })
-    idPerfil: Perfiles;
+    idPerfil: string;
 
    
 

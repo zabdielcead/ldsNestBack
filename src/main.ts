@@ -14,6 +14,9 @@ async function bootstrap() {
     
       //npm i --save @nestjs/config
       //npm install --save @nestjs/mongoose mongoose
+
+      //npm install --save @nestjs/passport passport passport-local
+      //npm install --save-dev @types/passport-local
       const app = await NestFactory.create(AppModule);
       const configService = app.get(ConfigService);
       

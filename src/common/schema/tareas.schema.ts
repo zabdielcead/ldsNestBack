@@ -32,13 +32,14 @@ export class Tareas {
     idTarea: string;
 
     @Prop({
-        type: mongoose.Schema.Types.ObjectId, ref: 'Perfiles',
+       // type: mongoose.Schema.Types.ObjectId, ref: 'Perfiles',
+       type:String,
         required:[
             true,
             'el idPerfil es obligatorio'
         ]
     })
-    idPerfil: Perfiles;
+    idPerfil: string;
 
 
     @Prop({
@@ -75,13 +76,14 @@ export class Tareas {
     fechaCaducidad: string;
 
     @Prop({
-        type: mongoose.Schema.Types.ObjectId, ref: 'Usuarios',
+        type:String,
+        //type: mongoose.Schema.Types.ObjectId, ref: 'Usuarios',
         required:[
             true,
             'el idUsuario es obligatorio'
         ]
     })
-    idUsuario: Usuarios;
+    idUsuario: string;
 
 
    

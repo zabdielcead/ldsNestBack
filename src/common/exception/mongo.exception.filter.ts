@@ -3,19 +3,19 @@ import { Request, Response } from 'express';
 import { ErrorCustom } from '../interfaces/response.error';
 import { MongoError } from 'mongodb';
 
-@Catch(HttpException)
-export class HttpExceptionFilter implements ExceptionFilter {
-  catch(exception: HttpException, host: ArgumentsHost) {
+@Catch(MongoError)
+export class MongoExceptionFilter implements ExceptionFilter {
+  catch(exception: MongoError, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
-    const status = exception.getStatus();
+   
     const respError:ErrorCustom = {
         estatus: `NOK`,
-        descEstatus: `status=${status}|descerror=${exception.message}`
+        descEstatus: `status=${status}|descerror=${exception.code}`
     }
     response
-      .status(status)
+      .status(400)
       .json({
         statusCode: status,
         timestamp: new Date().toISOString(),
