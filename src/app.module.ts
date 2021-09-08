@@ -6,6 +6,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './environment/configuration';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
+import { ProfilesModule } from './profiles/profiles.module';
+import { TareasModule } from './tareas/tareas.module';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { AuthModule } from './auth/auth.module';
       inject: [ConfigService],
      }),
     AuthModule,
+    ProfilesModule,
+    TareasModule,
   ],
   controllers: [
     AppController

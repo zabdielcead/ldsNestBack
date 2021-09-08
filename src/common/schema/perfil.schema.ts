@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 export type PerfilesDocument = Perfiles & Document;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Perfiles {
 //   @Prop({
 //       index:'text',
@@ -16,7 +16,8 @@ export class Perfiles {
 //   })
 //   _id: string;
 
-
+    @Prop()    
+    _id: string;
 
   @Prop({
         type:String,

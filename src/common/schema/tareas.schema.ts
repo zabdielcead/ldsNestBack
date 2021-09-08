@@ -6,7 +6,7 @@ import { Usuarios } from './usuario.schema';
 
 export type TareasDocument = Tareas & Document;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Tareas {
 //   @Prop({
 //       index:'text',
@@ -19,17 +19,21 @@ export class Tareas {
 //   })
 //   _id: string;
 
+ 
+  @Prop(
+  )    
+  _id: string;
 
 
   @Prop({
-        type:String,
+        type:Number,
         required:[
             true,
             'el idTarea es obligatorio'
         ],
        
     })
-    idTarea: string;
+    idTarea: number;
 
     @Prop({
        // type: mongoose.Schema.Types.ObjectId, ref: 'Perfiles',
