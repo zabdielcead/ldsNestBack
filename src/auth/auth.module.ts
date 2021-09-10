@@ -3,11 +3,15 @@ import { AuthService } from './auth/auth.service';
 import { AuthController } from './auth/auth.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Usuarios, UsuariosSchema } from '../common/schema/usuario.schema';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './auth/jwt.strategy';
 
 
 @Module({
   providers: [
-    AuthService
+    AuthService,
+    JwtStrategy
   ],
   controllers: [
     AuthController
@@ -22,6 +26,11 @@ import { Usuarios, UsuariosSchema } from '../common/schema/usuario.schema';
                                   },
                 
                                 ]),
+    PassportModule,
+    JwtModule.register({
+      secret: 'ldsBAT',
+      signOptions: { expiresIn: '24h' },
+    }),
   ]
 })
 export class AuthModule {}

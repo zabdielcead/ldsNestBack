@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Perfiles, PerfilesSchema } from '../common/schema/perfil.schema';
 import { Usuarios, UsuariosSchema } from '../common/schema/usuario.schema';
 import { Tareas, TareasSchema } from '../common/schema/tareas.schema';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   providers: [
@@ -31,6 +32,7 @@ import { Tareas, TareasSchema } from '../common/schema/tareas.schema';
                                 
                                             },
                                           ]),
+                                          AuthModule
           ],
 })
 export class UsersModule {}

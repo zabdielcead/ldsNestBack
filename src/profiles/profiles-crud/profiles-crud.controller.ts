@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Post, UseFilters, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { InterceptorHeaderInterceptor } from '../../common/exception/header.interceptor';
 import { HttpExceptionFilter } from '../../common/exception/http.exception.filter';
 import { MongoExceptionFilter } from '../../common/exception/mongo.exception.filter';
@@ -12,6 +13,7 @@ export class ProfilesCrudController {
 
     @Get('findAll')
     @UseInterceptors(new InterceptorHeaderInterceptor())
+    @UseGuards(AuthGuard('jwt'))
     @UseFilters(new HttpExceptionFilter(), new MongoExceptionFilter())
     public async findAllUsers(): Promise<Perfiles[]>{
         

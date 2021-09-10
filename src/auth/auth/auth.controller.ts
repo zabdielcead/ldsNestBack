@@ -4,6 +4,7 @@ import { UserDto } from '../dtos/user.dto';
 import { HttpExceptionFilter } from '../../common/exception/http.exception.filter';
 import { DataException } from 'src/common/exception/data.exception';
 import { Usuarios } from '../../common/schema/usuario.schema';
+import { UserLoginDto } from '../dtos/userlogin.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -12,8 +13,8 @@ export class AuthController {
 
     @Post('login')
     @UseFilters(new HttpExceptionFilter())
-     login(@Body() user: UserDto ){
-        return  this.authService.findUser(user);
+     login(@Body() user: UserDto ):Promise<UserLoginDto>{
+        return  this.authService.loginUser(user);
         
        
         

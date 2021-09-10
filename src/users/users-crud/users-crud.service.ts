@@ -58,6 +58,9 @@ export class UsersCrudService {
         
        
         //return await new this.usuarioModel(user).save();
+
+
+       
         
         return await this.usuarioModel.findOneAndUpdate({ _id: user._id }, user, {
             new: true,
