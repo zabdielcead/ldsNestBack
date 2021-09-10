@@ -13,7 +13,6 @@ export class ProfilesCrudController {
 
     @Get('findAll')
     @UseInterceptors(new InterceptorHeaderInterceptor())
-    @UseGuards(AuthGuard('jwt'))
     @UseFilters(new HttpExceptionFilter(), new MongoExceptionFilter())
     public async findAllUsers(): Promise<Perfiles[]>{
         

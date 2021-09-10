@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Param, Post, UseFilters, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { InterceptorHeaderInterceptor } from 'src/common/exception/header.interceptor';
 import { HttpExceptionFilter } from 'src/common/exception/http.exception.filter';
 import { MongoExceptionFilter } from 'src/common/exception/mongo.exception.filter';
@@ -15,6 +16,7 @@ export class TareasCrudController {
 
     
     @Get('findAll')
+    @UseGuards(AuthGuard('jwt'))
     @UseInterceptors(new InterceptorHeaderInterceptor())
     @UseFilters(new HttpExceptionFilter(), new MongoExceptionFilter())
     public async findAllUsers(): Promise<Tareas[]>{
@@ -23,6 +25,7 @@ export class TareasCrudController {
     }
 
     @Get('findActives')
+    @UseGuards(AuthGuard('jwt'))
     @UseInterceptors(new InterceptorHeaderInterceptor())
     @UseFilters(new HttpExceptionFilter(), new MongoExceptionFilter())
     public async findTareas(): Promise<Tareas[]>{
@@ -32,6 +35,7 @@ export class TareasCrudController {
 
 
     @Get('findTareasOrg/:idPerfil')
+    @UseGuards(AuthGuard('jwt'))
     @UseInterceptors(new InterceptorHeaderInterceptor())
     @UseFilters(new HttpExceptionFilter(), new MongoExceptionFilter())
     public async findUser(@Param('idPerfil' ) idPerfil:string): Promise<Tareas[]>{
@@ -41,6 +45,7 @@ export class TareasCrudController {
 
 
     @Post('save')
+    @UseGuards(AuthGuard('jwt'))
     @UseInterceptors(new InterceptorHeaderInterceptor())
     @UseFilters(new HttpExceptionFilter(), new MongoExceptionFilter())
     public async saveUpdateTarea(@Body() tarea:Tareas): Promise<Tareas>{
@@ -51,6 +56,7 @@ export class TareasCrudController {
 
 
     @Post('findTarea')
+    @UseGuards(AuthGuard('jwt'))
     @UseInterceptors(new InterceptorHeaderInterceptor())
     @UseFilters(new HttpExceptionFilter(), new MongoExceptionFilter())
     public async findTarea(@Body() tarea:Tareas): Promise<Tareas>{
@@ -60,6 +66,7 @@ export class TareasCrudController {
     }
 
     @Post('deleteTarea')
+    @UseGuards(AuthGuard('jwt'))
     @UseInterceptors(new InterceptorHeaderInterceptor())
     @UseFilters(new HttpExceptionFilter(), new MongoExceptionFilter())
     public async deleteTarea(@Body() tarea:Tareas): Promise<Tareas>{

@@ -1,4 +1,4 @@
-import { Controller, Post, Get, UseFilters, UseInterceptors, Body } from '@nestjs/common';
+import { Controller, Post, Get, UseFilters, UseInterceptors, Body, UseGuards } from '@nestjs/common';
 import { HttpExceptionFilter } from '../../common/exception/http.exception.filter';
 import { Perfiles, PerfilesDocument } from '../../common/schema/perfil.schema';
 import { UsersCrudService } from './users-crud.service';
@@ -7,6 +7,7 @@ import { Tareas } from '../../common/schema/tareas.schema';
 import { InterceptorHeaderInterceptor } from '../../common/exception/header.interceptor';
 import { User } from '../interfaces/user.interface';
 import { MongoExceptionFilter } from '../../common/exception/mongo.exception.filter';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
 export class UsersCrudController {
@@ -16,6 +17,7 @@ export class UsersCrudController {
 
 
     @Post('save')
+    @UseGuards(AuthGuard('jwt'))
     @UseInterceptors(new InterceptorHeaderInterceptor())
     @UseFilters(new HttpExceptionFilter(), new MongoExceptionFilter())
     public async save(@Body() user:Usuarios): Promise<Usuarios>{
@@ -25,6 +27,7 @@ export class UsersCrudController {
 
 
     @Get('findAll')
+    @UseGuards(AuthGuard('jwt'))
     @UseInterceptors(new InterceptorHeaderInterceptor())
     @UseFilters(new HttpExceptionFilter(), new MongoExceptionFilter())
     public async findAllUsers(): Promise<Usuarios[]>{
@@ -33,6 +36,7 @@ export class UsersCrudController {
     }
 
     @Post('findUser')
+    @UseGuards(AuthGuard('jwt'))
     @UseInterceptors(new InterceptorHeaderInterceptor())
     @UseFilters(new HttpExceptionFilter(), new MongoExceptionFilter())
     public async findUser(@Body() user:Usuarios): Promise<Usuarios>{
@@ -41,6 +45,7 @@ export class UsersCrudController {
     }
 
     @Post('deleteUser')
+    @UseGuards(AuthGuard('jwt'))
     @UseInterceptors(new InterceptorHeaderInterceptor())
     @UseFilters(new HttpExceptionFilter(), new MongoExceptionFilter())
     public async deleteUser(@Body() user:Usuarios): Promise<Usuarios>{
@@ -51,6 +56,7 @@ export class UsersCrudController {
 
     
    @Get('find')
+   @UseGuards(AuthGuard('jwt'))
    @UseFilters(new HttpExceptionFilter())
    getAllUsers() {
     return this.usersCrudService.findAll();
@@ -58,6 +64,7 @@ export class UsersCrudController {
 
 
   @Get("findED")
+  @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(new InterceptorHeaderInterceptor())
   @UseFilters(new HttpExceptionFilter())
     public async loginDos(): Promise<Perfiles[]>{
