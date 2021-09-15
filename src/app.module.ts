@@ -8,8 +8,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { ProfilesModule } from './profiles/profiles.module';
 import { TareasModule } from './tareas/tareas.module';
-import { ServeStaticModule } from '@nestjs/serve-static/dist/serve-static.module';
-import { join } from 'path';
+// import { ServeStaticModule } from '@nestjs/serve-static/dist/serve-static.module';
+// import { join } from 'path';
 
 
 @Module({
@@ -19,9 +19,9 @@ import { join } from 'path';
       isGlobal: true,
       load:[configuration]
     }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'filesswagger'),
-    }),
+    // ServeStaticModule.forRoot({
+    //   rootPath: join(__dirname, '..', 'filesswagger'),
+    // }),
     //MongooseModule.forRoot('mongodb+srv://user_node_cafe:zabdiel1@mycluster.iafyy.mongodb.net/lds'),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
