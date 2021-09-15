@@ -17,6 +17,8 @@ async function bootstrap() {
 
       //npm install --save @nestjs/passport passport passport-local
       //npm install --save-dev @types/passport-local
+
+      // vercel https://github.com/fyupanquia/shop-api
       const app = await NestFactory.create(AppModule);
       const configService = app.get(ConfigService);
       
