@@ -27,6 +27,8 @@ async function bootstrap() {
         .setDescription('Services - Back LDS Barrio Alta Tensión')
         .setVersion('1.0')
         .addTag('LDS BAT')
+        .setBasePath('/')
+        .addServer('/')
         .build();
       const document = SwaggerModule.createDocument(app, config);
       SwaggerModule.setup('api', app, document);
