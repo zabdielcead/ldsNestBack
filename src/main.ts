@@ -21,8 +21,8 @@ async function bootstrap() {
       // vercel https://github.com/fyupanquia/shop-api
       const app = await NestFactory.create(AppModule);
       const configService = app.get(ConfigService);
-      const sw = await import('@nestjs/swagger')
-      const config = new sw.DocumentBuilder()
+      
+      const config = new DocumentBuilder()
         .setTitle('LDS BACK')
         .setDescription('Services - Back LDS Barrio Alta Tensión')
         .setVersion('1.0')
@@ -30,8 +30,9 @@ async function bootstrap() {
         .build();
       const document = SwaggerModule.createDocument(app, config);
       SwaggerModule.setup('api', app, document);
-
-     
+      
+    
+      
       await app.listen(3000);
       //await app.listen(configService.get<number>('port'), configService.get<string>('host'));
     
