@@ -33,7 +33,7 @@ async function bootstrap() {
       const document = SwaggerModule.createDocument(app, config);
       SwaggerModule.setup('api', app, document);
       
-      app.useStaticAssets(join(__dirname, '..' ,'@nestjs/swagger'))
+     // app.useStaticAssets(join(__dirname, '..' ,'@nestjs/swagger'))
       
       await app.listen(3000);
       //await app.listen(configService.get<number>('port'), configService.get<string>('host'));
