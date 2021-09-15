@@ -1,7 +1,9 @@
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { join } from 'path';
 import { AppModule } from './app.module';
 //prueba
 async function bootstrap() {
@@ -19,7 +21,7 @@ async function bootstrap() {
       //npm install --save-dev @types/passport-local
 
       // vercel https://github.com/fyupanquia/shop-api
-      const app = await NestFactory.create(AppModule);
+      const app: NestExpressApplication = await NestFactory.create(AppModule);
       const configService = app.get(ConfigService);
       
       const config = new DocumentBuilder()
@@ -27,13 +29,11 @@ async function bootstrap() {
         .setDescription('Services - Back LDS Barrio Alta Tensión')
         .setVersion('1.0')
         .addTag('LDS BAT')
-        .setBasePath('/')
-        .addServer('/')
         .build();
       const document = SwaggerModule.createDocument(app, config);
       SwaggerModule.setup('api', app, document);
       
-    
+      app.useStaticAssets(join(__dirname, '..' ,'@nestjs/swagger'))
       
       await app.listen(3000);
       //await app.listen(configService.get<number>('port'), configService.get<string>('host'));
