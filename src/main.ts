@@ -41,17 +41,21 @@ async function bootstrap() {
       })
 
 
-      const options = {
-        'origin': '*',
-        'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        'preflightContinue': false,
-        'optionsSuccessStatus': 204,
-        'credentials':true,
-        'allowedHeaders': 'Content-Type, Accept, authlds',
+    //   const options = {
+    //     'origin': '*',
+    //     'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    //     'preflightContinue': false,
+    //     'optionsSuccessStatus': 204,
+    //     'credentials':true,
+    //     'allowedHeaders': 'Content-Type, Accept, authlds',
         
-     }
-    // //app.use(cors(options))
-     app.enableCors(options);
+    //  }         
+    // //app.use(cors(options) 
+    
+    
+    
+    //comentario
+     app.enableCors();
 
    
       
