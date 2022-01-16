@@ -44,7 +44,7 @@ async function bootstrap() {
       const options = {
         'origin': [
           'http://localhost:4200',
-          'http://localhost:5030',
+          'http://localhost:5030', 
           'http://localhost',
           '*',
         ],
