@@ -21,7 +21,7 @@ async function bootstrap() {
       //npm install --save-dev @types/passport-local
 
       // vercel https://github.com/fyupanquia/shop-api
-      const app: NestExpressApplication = await NestFactory.create(AppModule);
+      const app: NestExpressApplication = await NestFactory.create(AppModule, {cors:true});
       const configService = app.get(ConfigService);
       
       const config = new DocumentBuilder()
@@ -41,22 +41,22 @@ async function bootstrap() {
       })
 
 
-      const options = {
-        'origin': [
-          'http://localhost:4200',
-          'http://localhost:5030',
-          'http://localhost',
-          '*',
-        ],
-        'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        'preflightContinue': false,
-        'optionsSuccessStatus': 204,
-        'credentials':true,
-        'allowedHeaders': 'Content-Type, Accept, authlds',
+    //   const options = {
+    //     'origin': [
+    //       'http://localhost:4200',
+    //       'http://localhost:5030',
+    //       'http://localhost',
+    //       '*',
+    //     ],
+    //     'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    //     'preflightContinue': false,
+    //     'optionsSuccessStatus': 204,
+    //     'credentials':true,
+    //     'allowedHeaders': 'Content-Type, Accept, authlds',
         
-    }
-    //app.use(cors(options))
-    app.enableCors(options)
+    // }
+    // //app.use(cors(options))
+    // app.enableCors(options)
       
       await app.listen(3000);
       //await app.listen(configService.get<number>('port'), configService.get<string>('host'));
