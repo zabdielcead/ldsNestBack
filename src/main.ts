@@ -41,22 +41,19 @@ async function bootstrap() {
       })
 
 
-    //   const options = {
-    //     'origin': [
-    //       'http://localhost:4200',
-    //       'http://localhost:5030',
-    //       'http://localhost',
-    //       '*',
-    //     ],
-    //     'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    //     'preflightContinue': false,
-    //     'optionsSuccessStatus': 204,
-    //     'credentials':true,
-    //     'allowedHeaders': 'Content-Type, Accept, authlds',
+      const options = {
+        'origin': '*',
+        'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        'preflightContinue': false,
+        'optionsSuccessStatus': 204,
+        'credentials':true,
+        'allowedHeaders': 'Content-Type, Accept, authlds',
         
-    // }
+     }
     // //app.use(cors(options))
-    // app.enableCors(options)
+     app.enableCors(options);
+
+   
       
       await app.listen(3000);
       //await app.listen(configService.get<number>('port'), configService.get<string>('host'));
