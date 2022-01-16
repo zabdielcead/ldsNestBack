@@ -29,13 +29,28 @@ async function bootstrap() {
         .setDescription('Services - Back LDS Barrio Alta Tensión')
         .setVersion('1.0')
         .addTag('LDS BAT')
-        .addServer('/api')
+        .addServer('/')
         .build();
       const document = SwaggerModule.createDocument(app, config);
       SwaggerModule.setup('api', app, document);
+
+      
       
       app.useStaticAssets(join(__dirname, '..', 'filesswagger'),{
         prefix:'/api/'
+      })
+
+
+      app.enableCors({
+        origin: [
+          /^(.*)/,
+        ],
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        preflightContinue: false,
+        optionsSuccessStatus: 200,
+        credentials: true,
+        allowedHeaders:
+          'Origin,X-Requested-With,Content-Type,Accept,Authorization,authorization,X-Forwarded-for',
       })
       
       await app.listen(3000);
