@@ -41,17 +41,15 @@ async function bootstrap() {
       })
 
 
-      app.enableCors({
-        origin: [
-          /^(.*)/,
-        ],
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        preflightContinue: false,
-        optionsSuccessStatus: 200,
-        credentials: true,
-        allowedHeaders:
-          'Origin,X-Requested-With,Content-Type,Accept,Authorization,authorization,X-Forwarded-for',
-      })
+      const options = {
+        "origin": "*",
+        "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+        "preflightContinue": false,
+        "optionsSuccessStatus": 204,
+        "credentials":true
+    }
+    //app.use(cors(options))
+    app.enableCors(options)
       
       await app.listen(3000);
       //await app.listen(configService.get<number>('port'), configService.get<string>('host'));
